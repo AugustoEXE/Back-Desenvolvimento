@@ -1,23 +1,13 @@
-const { PrismaClient } = require("@prisma/client");
 const express = require("express");
 const app = express();
+const bodyParser = require("body-parser")
+const genreRoutes = require("./routes/genre")
 const port = 3000;
-const prisma = new PrismaClient();
 
-async function main() {
-  const allUsers = await prisma.User.findMany();
-  console.log(allUsers);
-}
+app.use(bodyParser.json(0))
+app.use(bodyParser.urlencoded({extended: false}))
 
-main()
-  .then(async () => {
-    await prisma.$disconnect();
-  })
-  .catch(async (e) => {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
-  });
+app.use(genreRoutes)
 
-app.get("/", (req, res) => res.send("Hello World!"));
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
