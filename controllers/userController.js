@@ -1,28 +1,32 @@
 const { PrismaClient } = require('@prisma/client')
-const bcrypt = require('bcrypt')
+const cookie = require('cookie');
 const jwt = require('jsonwebtoken')
 const prisma = new PrismaClient()
-module.exports={
-    async createUser(req, res){
-req.body = {
-     nome, email, password
-}
-const hashedPass = await bcrypt.hash(password.encode("utf-8"), 12)
 
-const createdUser = await prisma.User.create({
-    data: {
-        nome, email, hashedPass
-    }
-})
+   exports.create = async (data) => {
+
+const createdUser = await prisma.User.create(
+    {data}
+)
 
 const payload = {
-    
+ name: data.nome,
+ id: createdUser.id 
 }
 
-const generateJwt = jwt.sign()
-    },
+const generatedJwt = jwt.sign(payload, process.env.SECRET_KEY)
 
-    async listAllUsers(req, res){
-
-    }
+const cookiesOpts = {
+maxAge: 24 * 60 * 60 * 1000,
+httpOnly: true
 }
+
+const cookieValues = {
+    value: generatedJwt,
+isAuth: generatedJwt ? true : false,
+}
+
+cookie.serialize("userAuthentication", cookieValues, cookiesOpts)
+}
+
+
