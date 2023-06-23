@@ -4,7 +4,7 @@ const port = 3000;
 const bodyParser = require("body-parser");
 
 const authorRouter = require("./routes/authors");
-const publish_companyRouter = require("./routes/publish_company");
+const publish_companyRouter = require("./routes/publishCompany");
 const genreRoutes = require("./routes/genre");
 const bookRoutes = require("./routes/book");
 

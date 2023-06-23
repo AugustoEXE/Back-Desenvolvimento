@@ -2,7 +2,7 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 exports.list = async () => {
-  await prisma.genre.findMany();
+  return await prisma.genre.findMany();
 };
 
 exports.create = async (data) => {
