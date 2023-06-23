@@ -13,10 +13,11 @@ const createdUser = await prisma.User.create(
 
 const payload = {
  name: data.nome,
- id: createdUser.id 
+ id: createdUser.id,
+ 
 }
 
-const generatedJwt = jwt.sign(payload, process.env.SECRET_KEY)
+const generatedJwt = jwt.sign(payload, process.env.SECRET_KEY, {expiresIn: '24h'})
 
 const cookieValues = {
     value: generatedJwt,

@@ -3,6 +3,7 @@ const app = express();
 const port = 3000;
 const cookieParser = require('cookie-parser')
 const bodyParser = require("body-parser");
+const {auth} = require('./middlewares/auth')
 
 const authorRouter = require("./routes/authors");
 const publish_companyRouter = require("./routes/publishCompany");
@@ -14,7 +15,7 @@ app.use(bodyParser.json(0));
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(genreRoutes);
-app.use(authorRouter);
+app.use(auth(), authorRouter);
 app.use(bookRoutes);
 app.use(cookieParser(), userRoutes);
 
