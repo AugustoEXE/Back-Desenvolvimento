@@ -8,10 +8,11 @@ datasource db {
 }
 
 model User {
-  id    Int     @id @default(autoincrement())
-  name  String
-  email String  @unique
-  admin Boolean
+  id       Int     @id @default(autoincrement())
+  name     String
+  email    String  @unique
+  password String
+  admin    Boolean
 }
 
 model Author {
@@ -35,9 +36,10 @@ model Publish_company {
 model Book {
   id                 Int             @id @default(autoincrement())
   name               String
-  pages                Int
-  release_date       DateTime
+  pages              Int
+  release_date       DateTime?
   language           String
+  cover              String?
   author             Author          @relation(fields: [author_id], references: [id])
   author_id          Int
   genre              Genre           @relation(fields: [genre_id], references: [id])
