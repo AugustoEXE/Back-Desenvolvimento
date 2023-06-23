@@ -35,7 +35,9 @@ model Publish_company {
 model Book {
   id                 Int             @id @default(autoincrement())
   name               String
-  pages              Int
+  pages                Int
+  release_date       DateTime
+  language           String
   author             Author          @relation(fields: [author_id], references: [id])
   author_id          Int
   genre              Genre           @relation(fields: [genre_id], references: [id])
