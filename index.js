@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const port = 3000;
+const cookieParser = require('cookie-parser')
 const bodyParser = require("body-parser");
 
 const authorRouter = require("./routes/authors");
@@ -15,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(genreRoutes);
 app.use(authorRouter);
 app.use(bookRoutes);
-app.use(userRoutes);
+app.use(cookieParser(), userRoutes);
 
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

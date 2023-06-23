@@ -1,5 +1,7 @@
 const { PrismaClient } = require('@prisma/client')
 const cookie = require('cookie');
+const req = require('express/lib/request');
+const res = require('express/lib/response');
 const jwt = require('jsonwebtoken')
 const prisma = new PrismaClient()
 
@@ -16,17 +18,12 @@ const payload = {
 
 const generatedJwt = jwt.sign(payload, process.env.SECRET_KEY)
 
-const cookiesOpts = {
-maxAge: 24 * 60 * 60 * 1000,
-httpOnly: true
-}
-
 const cookieValues = {
     value: generatedJwt,
 isAuth: generatedJwt ? true : false,
 }
 
-cookie.serialize("userAuthentication", cookieValues, cookiesOpts)
+return cookieValues
 }
 
 
