@@ -2,15 +2,15 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 exports.list = async () => {
-  await prisma.genre.findMany();
+  await prisma.book.findMany();
 };
 
 exports.create = async (data) => {
-  await prisma.genre.create({ data });
+  await prisma.book.create({ data });
 };
 
 exports.delete = async (id) => {
-  await prisma.genre.delete({
+  await prisma.book.delete({
     where: {
       id: id,
     },
@@ -18,7 +18,7 @@ exports.delete = async (id) => {
 };
 
 exports.alter = async (id, data) => {
-  await prisma.genre.update({
+  await prisma.book.update({
     where: { id },
     data: data,
   });
