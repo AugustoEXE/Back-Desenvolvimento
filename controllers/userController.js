@@ -3,7 +3,7 @@ const cookie = require('cookie');
 const jwt = require('jsonwebtoken')
 const prisma = new PrismaClient()
 
-   exports.create = async (data) => {
+exports.create = async (data) => {
 
 const createdUser = await prisma.User.create(
     {data}

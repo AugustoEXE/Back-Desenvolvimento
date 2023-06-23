@@ -9,8 +9,10 @@ route.post("/create/user", async (req, res)=> {
         nome, email, password
     } = req.body
 
-    const hashedPass = await bcrypt.hash(password.encode("utf-8"), 12)
+    const hashedPass = await bcrypt.hash(password, 12)
 
     await userCreated.create(nome, email, hashedPass);
     res.send('Ok')  
 })
+
+module.exports = route;
