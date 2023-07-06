@@ -1,28 +1,69 @@
-
 const express = require("express");
-const bcrypt = require('bcrypt')
-const userCreated = require("../controllers/userController.js");
+const bcrypt = require("bcrypt");
+const userController = require("../controllers/userController.js");
 const { cookie } = require("express/lib/response");
-const route = express.Router()
+const route = express.Router();
 
-route.post("/create/user", async (req, res)=> {
-    const {
-        nome, email, password
-    } = req.body
+route.post("/create/user", async (req, res) => {
+    const { name, email, password } = req.body;
 
-
-    const hashedPass = await bcrypt.hash(password, 12)
+    const hashedPass = await bcrypt.hash(password, 12);
     const cookiesOpts = {
         maxAge: 24 * 60 * 60 * 1000,
-        httpOnly: true
-        }
-    const userAuth = await userCreated.create({name: nome, email: email, password :hashedPass, admin: false});
-    res.cookie("userAuthentication", JSON.stringify(userAuth), cookiesOpts).send("Ok")
-    const cookieValue = req.cookies.userAuthentication
-  
-    console.log(JSON.parse(cookieValue).value);
+        httpOnly: true,
+    };
+    const userAuth = await userController.create({
+        name: name,
+        email: email,
+        password: hashedPass,
+        admin: false,
+    });
+    res.cookie(
+        "userAuthentication",
+        JSON.stringify(userAuth),
+        cookiesOpts
+    ).send("Ok");
+});
 
-})
+route.post("/user/login", async (req, res) => {
+    const { email, password } = req.body;
 
+    const user = await userController.login({
+        email: email,
+        password: password,
+    });
+    const cookiesOpts = {
+        maxAge: 24 * 60 * 60 * 1000,
+        httpOnly: true,
+    };
+
+    res.cookie(
+        "userAuthentication",
+        JSON.stringify(user.val),
+        cookiesOpts
+    ).send(user.mess);
+});
+
+route.delete("/user/delete/:id", async (req, res) => {
+    const { id } = req.params;
+
+    await userController.delete(Number(id));
+    res.send("Usuário deletado!");
+});
+
+route.put("/user/update/:id", async (req, res) => {
+    const { id } = req.params;
+    const { name, email } = req.body;
+
+    await userController.alter({ id: id, data: { email: email, name: name } });
+    res.send("Usuário alterado!");
+});
+
+route.get("user/take_one/:id", async (req, res) => {
+    const { id } = req.params;
+
+    const userFound = await userController(id);
+    res.status(200).send("Usuário encontroado").json({ userFound });
+});
 
 module.exports = route;

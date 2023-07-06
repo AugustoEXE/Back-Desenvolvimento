@@ -3,23 +3,24 @@ const bookController = require("../controllers/bookController");
 const router = express.Router();
 
 router.get("/books", async (req, res) => {
-  const books = await bookController.list();
-  console.log(books)
-  res.json(books);
+    const data = req.query;
+    const books = await bookController.list(data);
+    res.json(books);
 });
+
 router.post("/book", async (req, res) => {
-  const newBook = await bookController.create(req.body);
-  res.json(newBook);
+    const newBook = await bookController.create(req.body);
+    res.json(newBook);
 });
 router.delete("/book/:id", async (req, res) => {
-  const { id } = req.params;
-  const deletedBook = await bookController.delete(parseInt(id));
-  res.json(deletedBook);
+    const { id } = req.params;
+    const deletedBook = await bookController.delete(parseInt(id));
+    res.json(deletedBook);
 });
 
 router.put("/book/:id", async (req, res) => {
-  const { id } = req.params;
-  const alteredBook = await bookController.alter(parseInt(id), req.body);
-  res.json(alteredBook);
+    const { id } = req.params;
+    const alteredBook = await bookController.alter(parseInt(id), req.body);
+    res.json(alteredBook);
 });
 module.exports = router;
