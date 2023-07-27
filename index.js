@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
 const port = 3000;
+const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
+const { auth } = require("./middlewares/auth");
 
 const authorRouter = require("./routes/authors");
 const publish_companyRouter = require("./routes/publishCompany");
@@ -11,11 +13,11 @@ const userRoutes = require("./routes/users");
 
 app.use(bodyParser.json(0));
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 app.use(genreRoutes);
 app.use(authorRouter);
 app.use(bookRoutes);
 app.use(userRoutes);
-
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
