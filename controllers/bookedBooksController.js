@@ -3,14 +3,19 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient()
 
 exports.create = async (data)=> {
+    
+ 
+    const { book_id, bookedDate, user_id} = data
     const formateDevolutionDate = () => {
-        const convertedData = data.bookedDate.toString()
-        return 
+        const daysAdded = bookedDate.getDate() + 7;
+        return  daysAdded.toISOString()
     }
-prisma.bookedBooks.create({data})
+await prisma.bookedBooks.create({data: {
+    book_id, bookedDate: formateDevolutionDate(), user_id
+}})
 }
 
-exports.bookedUserBooks = async (id)=> prisma.bookedBooks.findMany({
+exports.bookedUserBooks = async (id)=> await prisma.bookedBooks.findMany({
     include: {
         book: true
     },
@@ -20,7 +25,7 @@ exports.bookedUserBooks = async (id)=> prisma.bookedBooks.findMany({
     }
 })
 
-exports.historicBookedBooks = async (id)=> prisma.bookedBooks.findMany({
+exports.historicBookedBooks = async (id)=> await prisma.bookedBooks.findMany({
     include: {
         book: true,
         user: true

@@ -54,7 +54,7 @@ model Book {
 
 model BookedBooks {
     id Int @id @default(autoincrement())
-    active Boolean @default(false)
+    active Boolean @default(true)
     book Book @relation(fields: [book_id], references: [id])
     book_id Int
     user User @relation(fields: [user_id], references: [id])

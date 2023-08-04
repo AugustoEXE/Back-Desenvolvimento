@@ -59,6 +59,7 @@ async function createSeeder() {
                 name: "O colecionador de lágrimas",
                 pages: 323,
                 language: "português",
+                release_date:new Date('2023-07-28T15:20:45'),
                 author_id: findAuthors[2].id,
                 genre_id: findGenres[1].id,
                 publish_company_id: findPublishCompanies[2].id,
