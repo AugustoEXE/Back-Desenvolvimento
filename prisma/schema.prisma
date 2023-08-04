@@ -13,6 +13,7 @@ model User {
   email    String  @unique
   password String
   admin    Boolean
+  bookedBooks BookedBooks[]
 }
 
 model Author {
@@ -46,4 +47,13 @@ model Book {
   genre_id           Int
   publish_company    Publish_company @relation(fields: [publish_company_id], references: [id])
   publish_company_id Int
+  bookedBooks BookedBooks[]  
+}
+
+model BookedBooks {
+    id Int @id @default(autoincrement())
+    book Book @relation(fields: [book_id], references: [id])
+    book_id Int
+    user User @relation(fields: [user_id], references: [id])
+    user_id Int
 }
