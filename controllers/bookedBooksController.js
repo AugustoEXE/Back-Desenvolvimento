@@ -1,14 +1,35 @@
 const { PrismaClient } = require("@prisma/client");
-const { create } = require("./userController");
 
 const prisma = new PrismaClient()
 
-exponrt.create = async (data)=> prisma.bookedBooks.create({data})
+exports.create = async (data)=> {
+    const formateDevolutionDate = () => {
+        const convertedData = data.bookedDate.toString()
+        return 
+    }
+prisma.bookedBooks.create({data})
+}
 
-exponrt.selectBookedBooks = async (id)=> prisma.bookedBooks.({})
+exports.bookedUserBooks = async (id)=> prisma.bookedBooks.findMany({
+    include: {
+        book: true
+    },
+    where: {
+        user_id: id,
+        active: true
+    }
+})
 
-exponrt.create = async (data)=> prisma.bookedBooks.create({})
+exports.historicBookedBooks = async (id)=> prisma.bookedBooks.findMany({
+    include: {
+        book: true,
+        user: true
+    },
+    where: {
+        user_id: id,
+    }
+})
 
-exponrt.create = async (data)=> prisma.bookedBooks.create({})
+exports.create = async (data, id)=> prisma.bookedBooks.update({data: {active: data}, where: {user_id: id}})
 
-exponrt.create = async (data)=> prisma.bookedBooks.create({})
+exports.create = async (data)=> prisma.bookedBooks.create({})

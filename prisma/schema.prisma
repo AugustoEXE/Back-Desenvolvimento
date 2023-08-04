@@ -37,6 +37,7 @@ model Publish_company {
 model Book {
   id                 Int             @id @default(autoincrement())
   name               String
+  description        String
   pages              Int
   release_date       DateTime?
   language           String
@@ -48,12 +49,15 @@ model Book {
   publish_company    Publish_company @relation(fields: [publish_company_id], references: [id])
   publish_company_id Int
   bookedBooks BookedBooks[]  
+  available          Boolean @default(false)
 }
 
 model BookedBooks {
     id Int @id @default(autoincrement())
+    active Boolean @default(false)
     book Book @relation(fields: [book_id], references: [id])
     book_id Int
     user User @relation(fields: [user_id], references: [id])
+    bookedDate DateTime?
     user_id Int
 }
