@@ -3,6 +3,10 @@ const { log } = require("console");
 const prisma = new PrismaClient();
 
 exports.list = async (params) => {
+    const releaseDate = !params.release_date
+        ? undefined
+        : new Date(params.release_date);
+
     return await prisma.book.findMany({
         include: {
             author: true,
@@ -10,36 +14,22 @@ exports.list = async (params) => {
             genre: true,
         },
         where: {
-            name: params.name != null ? { contains: params.name } : undefined,
-
-            release_date: params.release_date
-                ? { equals: params.release_date }
-                : undefined,
-
+            name: { contains: params.name },
+            release_date: {
+                lte: releaseDate,
+            },
             language: params.language,
-
-            author:
-                params.author != null
-                    ? {
-                          name: {
-                              contains: params.author,
-                          },
-                      }
-                    : undefined,
-
-            genre: params.genre
-                ? {
-                      name: { contains: params.genre },
-                  }
-                : undefined,
-
-            publish_company: params.publish_company
-                ? {
-                      name: {
-                          contains: params.publish_company,
-                      },
-                  }
-                : undefined,
+            author: {
+                name: { constains: params.author },
+            },
+            genre: {
+                name: { constains: params.genre },
+            },
+            publish_company: {
+                name: {
+                    constains: params.publish_company,
+                },
+            },
         },
     });
 };
