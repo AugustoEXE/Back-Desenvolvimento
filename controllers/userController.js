@@ -38,24 +38,20 @@ exports.getOne = async (param) => {
 };
 
 exports.login = async (data) => {
-    try {
-        const userExists = await prisma.User.findUnique({
-            where: { email: data.email },
-        });
+    const userExists = await prisma.User.findUnique({
+        where: { email: data.email },
+    });
 
-        if (userExists.email === data.email) {
-            const cookieValue = await generateToken(userExists);
-            const validate = bcrypt.compare(data.password, userExists.password);
+    if (userExists.email === data.email) {
+        const cookieValue = await generateToken(userExists);
+        const validate = bcrypt.compare(data.password, userExists.password);
 
-            if (validate) {
-                return { val: cookieValue, mess: "Logado!" };
-            } else {
-                return "Senha incorreta";
-            }
+        if (validate) {
+            return cookieValue;
         } else {
-            throw new Error("Usuário não registrado");
+            throw new Error("Senha incorreta!");
         }
-    } catch (e) {
-        return e.message;
+    } else {
+        throw new Error("Usuário não registrado!");
     }
 };
