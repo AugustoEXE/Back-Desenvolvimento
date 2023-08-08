@@ -2,9 +2,6 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 exports.list = async (params) => {
-    const releaseDate = !params.release_date
-        ? undefined
-        : new Date(params.release_date)
 
     return await prisma.book.findMany({
         where: {
@@ -32,6 +29,8 @@ exports.list = async (params) => {
 exports.create = async (data) => {
     await prisma.book.create({ data });
 };
+
+exports.bookBooks = async (id, data)=> prisma.book.update({data: {available: data}, where: {id: id}})
 
 exports.delete = async (id) => {
     await prisma.book.delete({
