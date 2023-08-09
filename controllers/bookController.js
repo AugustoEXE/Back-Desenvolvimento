@@ -2,6 +2,10 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 exports.list = async (params) => {
+    const releaseDate = !params.release_date
+        ? undefined
+        : new Date(params.release_date);
+
     return await prisma.book.findMany({
         include: {
             author: true,

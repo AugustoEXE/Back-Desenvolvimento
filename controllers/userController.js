@@ -1,11 +1,11 @@
 const { PrismaClient } = require("@prisma/client");
 const { generateToken } = require("../funcs/token.js");
 const bcrypt = require("bcrypt");
+const { log } = require("console");
 
 const prisma = new PrismaClient();
 
 exports.create = async (data) => {
-    console.log(data);
     const alreadyCreatedUser = await prisma.User.findUnique({
         where: { email: data.email },
     });
@@ -45,7 +45,6 @@ exports.login = async (data) => {
     if (userExists.email === data.email) {
         const cookieValue = await generateToken(userExists);
         const validate = bcrypt.compare(data.password, userExists.password);
-
         if (validate) {
             return cookieValue;
         } else {

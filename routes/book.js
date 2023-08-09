@@ -14,7 +14,7 @@ router.post("/book", auth, async (req, res) => {
     const newBook = await bookController.create(req.body);
     res.json(newBook);
 });
-router.delete("/book/:id", async (req, res) => {
+router.delete("/book/del/:id", async (req, res) => {
     const { id } = req.params;
     const deletedBook = await bookController.delete(parseInt(id));
     res.json(deletedBook);

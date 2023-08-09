@@ -39,7 +39,7 @@ route.post("/user/login", async (req, res) => {
         };
         res.cookie(
             "userAuthentication",
-            JSON.stringify(user.val),
+            JSON.stringify(user),
             cookiesOpts
         ).json({ message: "Loagado!" });
     } catch (e) {

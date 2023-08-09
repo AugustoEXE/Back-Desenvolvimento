@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 module.exports = {
     async generateToken(data) {
         const payload = {
-            name: data.nome,
+            name: data.name,
             id: data.id,
         };
 
