@@ -1,7 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const userController = require("../controllers/userController.js");
-const { cookie } = require("express/lib/response");
+
 const route = express.Router();
 
 route.post("/create/user", async (req, res) => {
@@ -27,21 +27,24 @@ route.post("/create/user", async (req, res) => {
 
 route.post("/user/login", async (req, res) => {
     const { email, password } = req.body;
-
-    const user = await userController.login({
-        email: email,
-        password: password,
-    });
-    const cookiesOpts = {
-        maxAge: 24 * 60 * 60 * 1000,
-        httpOnly: true,
-    };
-
-    res.cookie(
-        "userAuthentication",
-        JSON.stringify(user.val),
-        cookiesOpts
-    ).send(user.mess);
+    console.log(email);
+    try {
+        const user = await userController.login({
+            email: email,
+            password: password,
+        });
+        const cookiesOpts = {
+            maxAge: 24 * 60 * 60 * 1000,
+            httpOnly: true,
+        };
+        res.cookie(
+            "userAuthentication",
+            JSON.stringify(user),
+            cookiesOpts
+        ).json({ message: "Loagado!" });
+    } catch (e) {
+        res.json({ message: e.message });
+    }
 });
 
 route.delete("/user/delete/:id", async (req, res) => {

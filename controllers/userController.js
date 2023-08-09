@@ -1,11 +1,11 @@
 const { PrismaClient } = require("@prisma/client");
 const { generateToken } = require("../funcs/token.js");
 const bcrypt = require("bcrypt");
+const { log } = require("console");
 
 const prisma = new PrismaClient();
 
 exports.create = async (data) => {
-    console.log(data);
     const alreadyCreatedUser = await prisma.User.findUnique({
         where: { email: data.email },
     });
@@ -38,24 +38,19 @@ exports.getOne = async (param) => {
 };
 
 exports.login = async (data) => {
-    try {
-        const userExists = await prisma.User.findUnique({
-            where: { email: data.email },
-        });
+    const userExists = await prisma.User.findUnique({
+        where: { email: data.email },
+    });
 
-        if (userExists.email === data.email) {
-            const cookieValue = await generateToken(userExists);
-            const validate = bcrypt.compare(data.password, userExists.password);
-
-            if (validate) {
-                return { val: cookieValue, mess: "Logado!" };
-            } else {
-                return "Senha incorreta";
-            }
+    if (userExists.email === data.email) {
+        const cookieValue = await generateToken(userExists);
+        const validate = bcrypt.compare(data.password, userExists.password);
+        if (validate) {
+            return cookieValue;
         } else {
-            throw new Error("Usuário não registrado");
+            throw new Error("Senha incorreta!");
         }
-    } catch (e) {
-        return e.message;
+    } else {
+        throw new Error("Usuário não registrado!");
     }
 };

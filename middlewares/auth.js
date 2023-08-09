@@ -2,20 +2,24 @@ const jwt = require("jsonwebtoken");
 
 module.exports = {
     async auth(req, res, next) {
-        const cookieValues = JSON.parse(req.cookies.userAuthentication).value;
+        if (req.cookies.userAuthentication) {
+            const cookieValues = JSON.parse(
+                req.cookies.userAuthentication
+            ).value;
 
-        if (cookieValues) {
             const verifyToken = jwt.verify(
                 cookieValues,
                 process.env.SECRET_KEY
             );
-            console.log(verifyToken);
+            console.log("esse agui", cookieValues);
             if (verifyToken) {
                 req.payload = verifyToken;
                 next();
             } else {
-                res.send("sem permissão");
+                res.send("no permission");
             }
+        } else {
+            res.json({ mess: "Cookies not available" });
         }
     },
 };

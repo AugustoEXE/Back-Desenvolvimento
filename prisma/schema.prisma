@@ -37,7 +37,7 @@ model Publish_company {
 model Book {
   id                 Int             @id @default(autoincrement())
   name               String
-  description        String
+  description        String?
   pages              Int
   release_date       DateTime?
   language           String
