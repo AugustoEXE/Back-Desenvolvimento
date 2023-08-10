@@ -27,9 +27,9 @@ exports.create = async (data) => {
     } else {
         await prisma.bookedBooks.create({
             data: {
-                book_id,
+                book_id: Number(book_id),
                 bookedDate: formateDevolutionDate(),
-                user_id,
+                user_id: Number(user_id),
             },
         });
     }
