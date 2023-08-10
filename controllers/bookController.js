@@ -38,23 +38,48 @@ exports.list = async (params) => {
 // };
 
 exports.create = async (data) => {
-    await prisma.book.create({ data });
+    const { release_date, pages, author_id, genre_id, publish_company_id } =
+        data;
+
+    const formatedData = release_date ? undefined : new Date(release_date);
+    await prisma.book.create({
+        data: {
+            ...data,
+            release_date: formatedData,
+            pages: Number(pages),
+            author_id: Number(author_id),
+            genre_id: Number(genre_id),
+            publish_company_id: Number(publish_company_id),
+        },
+    });
 };
 
-exports.bookBooks = async (id, data) =>
-    prisma.book.update({ data: { available: data }, where: { id: id } });
-
+exports.bookBooks = async (id, data) => {
+    await prisma.book.update({
+        data: { available: data },
+        where: { id: Number(id) },
+    });
+};
 exports.delete = async (id) => {
     await prisma.book.delete({
         where: {
-            id: id,
+            id: Number(id),
         },
     });
 };
 
 exports.alter = async (id, data) => {
+    const { author_id, genre_id, publish_company } = data;
+
     await prisma.book.update({
-        where: { id },
-        data: data,
+        where: { id: Number(id) },
+        data: {
+            ...data,
+            release_date: rightDate,
+            pages: Number(pages),
+            author_id: Number(author_id),
+            genre_id: Number(genre_id),
+            publish_company_id: Number(publish_company),
+        },
     });
 };
