@@ -28,5 +28,6 @@ app.use(authorRouter);
 app.use(bookRoutes);
 app.use(userRoutes);
 app.use(bookedBooks);
+app.use(publish_companyRouter)
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
