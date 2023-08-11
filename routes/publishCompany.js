@@ -3,16 +3,15 @@ const express = require('express')
 const router = express.Router()
 
 const publishCompanyController = require('../controllers/publishCompanyController')
+const { auth } = require('../middlewares/auth')
 
 router.get('/publish-companies',async (req,res)=>{
     const publish_companies = await publishCompanyController.getAll()
     res.json(publish_companies)
 })
 
-router.post('/publish-company', async (req,res)=>{
-    const {name} = req.body
-    const data = {name}
-    await publishCompanyController.create(data)
+router.post('/publish-company',auth, async (req,res)=>{
+    await publishCompanyController.create(req.body)
     res.send('OK')
 })
 

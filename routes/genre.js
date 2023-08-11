@@ -1,14 +1,15 @@
 const express = require("express");
 const genreController = require("../controllers/genreController");
+const { auth } = require("../middlewares/auth");
 const router = express.Router();
 
 router.get("/genres", async (req, res) => {
   const genres = await genreController.list();
   res.json(genres);
 });
-router.post("/genre", async (req, res) => {
+router.post("/genre",auth, async (req, res) => {
   const newGenre = await genreController.create(req.body);
-  res.json(newGenre);
+  return res.json(newGenre);
 });
 router.delete("/genre/:id", async (req, res) => {
   const { id } = req.params;

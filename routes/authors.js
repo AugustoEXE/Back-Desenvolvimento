@@ -10,12 +10,14 @@ router.get("/authors", async (req, res) => {
     res.json(authors);
 });
 
-router.post("/author", auth, async (req, res) => {
-    const { name } = req.body;
-    const { id } = req.payload;
-    await authorController.create(name);
-    res.status(200).send({ id });
-});
+router.post("/author",
+    auth, 
+    async (req, res) => {
+        // const { id } = req.payload;
+        await authorController.create(req.body);
+        // res.status(200).send({ id });
+        res.status(200).send('ok');
+    });
 
 router.put("/author/:id", async (req, res) => {
     const { name } = req.body;
