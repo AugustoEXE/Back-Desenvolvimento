@@ -30,8 +30,8 @@ route.post("/user/login", async (req, res) => {
     // console.log(email);
     try {
         const user = await userController.login({
-            email: email,
-            password: password,
+            email,
+            password,
         });
         const cookiesOpts = {
             maxAge: 24 * 60 * 60 * 1000,

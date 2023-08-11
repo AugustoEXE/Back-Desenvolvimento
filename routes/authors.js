@@ -11,7 +11,7 @@ router.get("/authors", async (req, res) => {
 });
 
 router.post("/author",
-    // auth, 
+    auth, 
     async (req, res) => {
         // const { id } = req.payload;
         await authorController.create(req.body);

@@ -38,8 +38,9 @@ exports.getOne = async (param) => {
 };
 
 exports.login = async (data) => {
+    const { email } = data
     const userExists = await prisma.User.findUnique({
-        where: { email: data.email },
+        where: { email },
     });
 
     if (userExists.email === data.email) {
