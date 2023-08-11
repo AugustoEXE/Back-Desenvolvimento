@@ -51,12 +51,24 @@ exports.create = async ({ data }) => {
     const formatedData = !release_date ? undefined : new Date(release_date);
     const blobImage = Buffer.from(cover, "utf8");
     console.clear();
-    console.log(blobImage);
+    // console.log(blobImage);
     // return
+    console.log({
+        data: {
+            ...data,
+            // cover: blobImage,
+            release_date: formatedData,
+            pages: +pages,
+            author_id: +author_id,
+            genre_id: +genre_id,
+            publish_company_id: +publish_company_id,
+        },
+    })
     await prisma.book.create({
         data: {
             ...data,
             cover: blobImage,
+            // cover: null,
             release_date: formatedData,
             pages: +pages,
             author_id: +author_id,
