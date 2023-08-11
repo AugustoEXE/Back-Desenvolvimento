@@ -10,7 +10,7 @@ router.get("/books", async (req, res) => {
     res.json(books);
 });
 
-router.post("/book",  async (req, res) => {
+router.post("/book", auth, async (req, res) => {
     const newBook = await bookController.create(req.body);
     return res.json(newBook);
 });
