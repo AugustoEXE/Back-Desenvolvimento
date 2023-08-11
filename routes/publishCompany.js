@@ -10,9 +10,11 @@ router.get('/publish-companies',async (req,res)=>{
 })
 
 router.post('/publish-company', async (req,res)=>{
-    const {name} = req.body
-    const data = {name}
-    await publishCompanyController.create(data)
+    console.log('headers')
+    console.log(req.headers?.cookie)
+    console.log('cookies')
+    console.log(req.cookies)
+    await publishCompanyController.create(req.body)
     res.send('OK')
 })
 

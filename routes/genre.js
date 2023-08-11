@@ -8,7 +8,7 @@ router.get("/genres", async (req, res) => {
 });
 router.post("/genre", async (req, res) => {
   const newGenre = await genreController.create(req.body);
-  res.json(newGenre);
+  return res.json(newGenre);
 });
 router.delete("/genre/:id", async (req, res) => {
   const { id } = req.params;
