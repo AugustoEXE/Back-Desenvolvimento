@@ -8,16 +8,19 @@ async function createSeeder() {
                 name: "Gabriel",
                 email: "santini@gmail.com",
                 password: "senha123",
+                admin:true,
             },
             {
                 name: "Inácio",
                 email: "inacio@gmail.com",
                 password: "senha123",
+                admin:true,
             },
             {
                 name: "Augusto",
                 email: "augusto@gmail.com",
                 password: "senha123",
+                admin:true,
             },
         ],
     });
