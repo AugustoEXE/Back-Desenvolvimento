@@ -1,5 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+const upload = require("express-fileupload");
 
 exports.list = async (params) => {
     const releaseDate = !params.release_date
@@ -37,14 +38,32 @@ exports.list = async (params) => {
 //     return await prisma.book.findMany();
 // };
 
-console.log('ta aqui')
+console.log("ta aqui");
 exports.create = async (data) => {
-    const { release_date, pages, author_id, genre_id, publish_company_id } =
-        data.data;
+    const {
+        cover,
+        release_date,
+        pages,
+        author_id,
+        genre_id,
+        publish_company_id,
+    } = data.data;
+
+    cover = req.files.image;
+    console.log(cover);
+    cover.mv("./uploads/" + cover.name, () => {
+        if (err) {
+            return res.send(err);
+        } else {
+            res.send("Uploaded");
+        }
+    });
+
     const formatedData = release_date ? undefined : new Date(release_date);
     return await prisma.book.create({
         data: {
             ...data.data,
+            cover: cover.data,
             release_date: formatedData,
             pages: Number(pages),
             author_id: Number(author_id),
