@@ -3,6 +3,7 @@ const app = express();
 const port = 3000;
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
+const upload = require("express-fileupload");
 const { auth } = require("./middlewares/auth");
 
 const authorRouter = require("./routes/authors");
@@ -16,6 +17,7 @@ const cors = require("cors");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(upload());
 app.use(
     cors({
         origin: "http://localhost:5173",
@@ -28,6 +30,6 @@ app.use(authorRouter);
 app.use(bookRoutes);
 app.use(userRoutes);
 app.use(bookedBooks);
-app.use(publish_companyRouter)
+app.use(publish_companyRouter);
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

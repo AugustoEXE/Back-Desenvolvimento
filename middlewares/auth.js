@@ -17,10 +17,10 @@ module.exports = {
                 req.payload = verifyToken;
                 next();
             } else {
-                res.send("no permission");
+                res.status(403).json({ mess: "no permissions" });
             }
         } else {
-            res.json({ mess: "Cookies not available" });
+            res.status(403).json({ mess: "cookies not available" });
         }
     },
 };
