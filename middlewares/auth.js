@@ -11,7 +11,7 @@ module.exports = {
                 cookieValues,
                 process.env.SECRET_KEY
             );
-            console.log("esse agui", cookieValues);
+            // console.log("esse agui", cookieValues);
             if (verifyToken) {
                 req.payload = verifyToken;
                 next();
