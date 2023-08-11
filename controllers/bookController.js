@@ -37,14 +37,14 @@ exports.list = async (params) => {
 //     return await prisma.book.findMany();
 // };
 
+console.log('ta aqui')
 exports.create = async (data) => {
     const { release_date, pages, author_id, genre_id, publish_company_id } =
-        data;
-
+        data.data;
     const formatedData = release_date ? undefined : new Date(release_date);
-    await prisma.book.create({
+    return await prisma.book.create({
         data: {
-            ...data,
+            ...data.data,
             release_date: formatedData,
             pages: Number(pages),
             author_id: Number(author_id),

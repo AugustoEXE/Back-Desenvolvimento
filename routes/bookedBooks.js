@@ -22,7 +22,7 @@ router.post("/bookedBooks", auth, async (req, res) => {
 });
 
 router.get("/user/books", auth, async (req, res) => {
-    console.log(req.payload.name);
+    // console.log(req.payload.name);
     const result = await bookedBooksController.bookedUserBooks(req.payload.id);
     res.json(result);
 });

@@ -5,14 +5,14 @@ const router = express.Router();
 
 router.get("/books", async (req, res) => {
     const data = req.query;
-    console.log(data.author);
+    // console.log(data.author);
     const books = await bookController.list(data);
     res.json(books);
 });
 
-router.post("/book", auth, async (req, res) => {
+router.post("/book",  async (req, res) => {
     const newBook = await bookController.create(req.body);
-    res.json(newBook);
+    return res.json(newBook);
 });
 router.delete("/book/del/:id", async (req, res) => {
     const { id } = req.params;
