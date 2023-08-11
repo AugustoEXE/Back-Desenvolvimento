@@ -38,7 +38,6 @@ exports.list = async (params) => {
 //     return await prisma.book.findMany();
 // };
 
-console.log("ta aqui");
 exports.create = async (data) => {
     const {
         cover,
