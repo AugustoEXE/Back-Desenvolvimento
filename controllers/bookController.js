@@ -39,7 +39,7 @@ exports.list = async (params) => {
 // };
 console.log("ta aqui");
 
-exports.create = async (data) => {
+exports.create = async ({ data }) => {
     const {
         cover,
         release_date,
@@ -47,30 +47,24 @@ exports.create = async (data) => {
         author_id,
         genre_id,
         publish_company_id,
-    } = data.data;
-
-    cover = req.files.image;
-    console.log(cover);
-    cover.mv("./uploads/" + cover.name, () => {
-        if (err) {
-            return res.send(err);
-        } else {
-            res.send("Uploaded");
-        }
-    });
-
-    const formatedData = release_date ? undefined : new Date(release_date);
-    return await prisma.book.create({
+    } = data;
+    const formatedData = !release_date ? undefined : new Date(release_date);
+    const blobImage = Buffer.from(cover, "utf8");
+    console.clear();
+    console.log(blobImage);
+    // return
+    await prisma.book.create({
         data: {
-            ...data.data,
-            cover: cover.data,
+            ...data,
+            cover: blobImage,
             release_date: formatedData,
-            pages: Number(pages),
-            author_id: Number(author_id),
-            genre_id: Number(genre_id),
-            publish_company_id: Number(publish_company_id),
+            pages: +pages,
+            author_id: +author_id,
+            genre_id: +genre_id,
+            publish_company_id: +publish_company_id,
         },
     });
+    return 'ok';
 };
 
 exports.bookBooks = async (id, data) => {
