@@ -69,4 +69,9 @@ route.get("user/take_one/:id", async (req, res) => {
     res.status(200).send("Usuário encontroado").json({ userFound });
 });
 
+route.get("user/get-all", async (req, res) => {
+    const users = await userController.list();
+    res.json(users);
+})
+
 module.exports = route;

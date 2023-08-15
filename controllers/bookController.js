@@ -37,7 +37,7 @@ exports.list = async (params) => {
 // exports.list = async () => {
 //     return await prisma.book.findMany();
 // };
-console.log("ta aqui");
+// console.log("ta aqui");
 
 exports.create = async ({ data }) => {
     const {
@@ -50,20 +50,20 @@ exports.create = async ({ data }) => {
     } = data;
     const formatedData = !release_date ? undefined : new Date(release_date);
     const blobImage = Buffer.from(cover, "utf8");
-    console.clear();
+    // console.clear();
     // console.log(blobImage);
     // return
-    console.log({
-        data: {
-            ...data,
-            // cover: blobImage,
-            release_date: formatedData,
-            pages: +pages,
-            author_id: +author_id,
-            genre_id: +genre_id,
-            publish_company_id: +publish_company_id,
-        },
-    })
+    // console.log({
+    //     data: {
+    //         ...data,
+    //         // cover: blobImage,
+    //         release_date: formatedData,
+    //         pages: +pages,
+    //         author_id: +author_id   ,
+    //         genre_id: +genre_id,
+    //         publish_company_id: +publish_company_id,
+    //     },
+    // })
     await prisma.book.create({
         data: {
             ...data,
