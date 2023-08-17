@@ -62,14 +62,14 @@ route.put("/user/update/:id", async (req, res) => {
     res.send("Usuário alterado!");
 });
 
-route.get("user/take_one/:id", async (req, res) => {
+route.get("/user/take_one/:id", async (req, res) => {
     const { id } = req.params;
 
     const userFound = await userController(id);
     res.status(200).send("Usuário encontroado").json({ userFound });
 });
 
-route.get("user/get-all", async (req, res) => {
+route.get("/user/get-all", async (req, res) => {
     const users = await userController.list();
     res.json(users);
 })
