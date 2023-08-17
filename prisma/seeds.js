@@ -8,19 +8,19 @@ async function createSeeder() {
                 name: "Gabriel",
                 email: "santini@gmail.com",
                 password: "senha123",
-                admin:true,
+                admin: true,
             },
             {
                 name: "Inácio",
                 email: "inacio@gmail.com",
                 password: "senha123",
-                admin:true,
+                admin: true,
             },
             {
                 name: "Augusto",
                 email: "augusto@gmail.com",
                 password: "senha123",
-                admin:true,
+                admin: true,
             },
         ],
     });
@@ -60,14 +60,16 @@ async function createSeeder() {
         data: [
             {
                 name: "O colecionador de lágrimas",
+                cover: "nomedoarquivo",
                 pages: 323,
                 language: "português",
-                release_date:new Date('2023-07-28T15:20:45'),
+                release_date: new Date("2023-07-28T15:20:45"),
                 author_id: findAuthors[2].id,
                 genre_id: findGenres[1].id,
                 publish_company_id: findPublishCompanies[2].id,
             },
             {
+                cover: "nomedoarquivo",
                 name: "Quincas Borba",
                 pages: 200,
                 language: "português",
@@ -76,6 +78,7 @@ async function createSeeder() {
                 publish_company_id: findPublishCompanies[0].id,
             },
             {
+                cover: "nomedoarquivo",
                 name: "A revolu;ão do bichos",
                 pages: 180,
                 language: "português",

@@ -41,7 +41,7 @@ model Book {
     pages              Int
     release_date       DateTime?
     language           String
-    cover              Bytes?
+    cover              String
     author             Author          @relation(fields: [author_id], references: [id])
     author_id          Int
     genre              Genre           @relation(fields: [genre_id], references: [id])

@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 
 module.exports = {
     async auth(req, res, next) {
-        // console.log(req.cookies)
         if (req.cookies.userAuthentication) {
             const cookieValues = JSON.parse(
                 req.cookies.userAuthentication

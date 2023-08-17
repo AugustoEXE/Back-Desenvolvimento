@@ -1,19 +1,21 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
-const upload = require("express-fileupload");
+const path = require("path");
+const Jimp = require("jimp");
 
 exports.list = async (params) => {
     const releaseDate = !params.release_date
         ? undefined
         : new Date(params.release_date);
 
-    return await prisma.book.findMany({
+    const query = await prisma.book.findMany({
         include: {
             author: true,
             publish_company: true,
             genre: true,
         },
         where: {
+            id: params.id == null ? { gt: 0 } : { equals: +params.id },
             name: { contains: params.name },
             release_date: {
                 lte: releaseDate,
@@ -32,6 +34,8 @@ exports.list = async (params) => {
             },
         },
     });
+
+    return query;
 };
 
 // exports.list = async () => {
@@ -39,17 +43,16 @@ exports.list = async (params) => {
 // };
 // console.log("ta aqui");
 
-exports.create = async ({ data }) => {
-    const {
-        cover,
-        release_date,
-        pages,
-        author_id,
-        genre_id,
-        publish_company_id,
-    } = data;
+exports.create = async ({ body, files }) => {
+    const { release_date, pages, author_id, genre_id, publish_company_id } =
+        body;
+
+    console.log(body);
     const formatedData = !release_date ? undefined : new Date(release_date);
-    const blobImage = Buffer.from(cover, "utf8");
+    const filePath = process.env.UPLOAD_FILE + files.filename;
+    // return
+    console.log(files);
+    //const blobImage = Buffer.from(cover, "utf8");
     // console.clear();
     // console.log(blobImage);
     // return
@@ -66,9 +69,8 @@ exports.create = async ({ data }) => {
     // })
     await prisma.book.create({
         data: {
-            ...data,
-            cover: blobImage,
-            // cover: null,
+            ...body,
+            cover: filePath,
             release_date: formatedData,
             pages: +pages,
             author_id: +author_id,
@@ -76,7 +78,7 @@ exports.create = async ({ data }) => {
             publish_company_id: +publish_company_id,
         },
     });
-    return 'ok';
+    return "ok";
 };
 
 exports.bookBooks = async (id, data) => {

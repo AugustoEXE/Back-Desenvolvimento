@@ -16,7 +16,7 @@ route.post("/create/user", async (req, res) => {
         name,
         email,
         password: hashedPass,
-        admin
+        admin,
     });
     res.cookie(
         "userAuthentication",
