@@ -90,7 +90,7 @@ exports.bookBooks = async (id, data) => {
 exports.delete = async (id) => {
     await prisma.book.delete({
         where: {
-            id: Number(id),
+            id: parseInt(id),
         },
     });
 };
