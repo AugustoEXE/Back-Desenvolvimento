@@ -3,17 +3,14 @@ const express = require('express')
 const router = express.Router()
 
 const publishCompanyController = require('../controllers/publishCompanyController')
+const { auth } = require('../middlewares/auth')
 
 router.get('/publish-companies',async (req,res)=>{
     const publish_companies = await publishCompanyController.getAll()
     res.json(publish_companies)
 })
 
-router.post('/publish-company', async (req,res)=>{
-    console.log('headers')
-    console.log(req.headers?.cookie)
-    console.log('cookies')
-    console.log(req.cookies)
+router.post('/publish-company',auth, async (req,res)=>{
     await publishCompanyController.create(req.body)
     res.send('OK')
 })

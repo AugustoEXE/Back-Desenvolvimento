@@ -1,19 +1,21 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
-const upload = require("express-fileupload");
+const path = require("path");
+const Jimp = require("jimp");
 
 exports.list = async (params) => {
     const releaseDate = !params.release_date
         ? undefined
         : new Date(params.release_date);
 
-    return await prisma.book.findMany({
+    const query = await prisma.book.findMany({
         include: {
             author: true,
             publish_company: true,
             genre: true,
         },
         where: {
+            id: params.id == null ? { gt: 0 } : { equals: +params.id },
             name: { contains: params.name },
             release_date: {
                 lte: releaseDate,
@@ -32,44 +34,36 @@ exports.list = async (params) => {
             },
         },
     });
+
+    return query;
 };
 
 // exports.list = async () => {
 //     return await prisma.book.findMany();
 // };
+console.log("ta aqui");
 
-exports.create = async (data) => {
-    const {
-        cover,
-        release_date,
-        pages,
-        author_id,
-        genre_id,
-        publish_company_id,
-    } = data.data;
+exports.create = async ({ body, files }) => {
+    const { release_date, pages, author_id, genre_id, publish_company_id } =
+        body;
 
-    cover = req.files.image;
-    console.log(cover);
-    cover.mv("./uploads/" + cover.name, () => {
-        if (err) {
-            return res.send(err);
-        } else {
-            res.send("Uploaded");
-        }
-    });
-
-    const formatedData = release_date ? undefined : new Date(release_date);
-    return await prisma.book.create({
+    console.log(body);
+    const formatedData = !release_date ? undefined : new Date(release_date);
+    const filePath = process.env.UPLOAD_FILE + files.filename;
+    // return
+    console.log(files);
+    await prisma.book.create({
         data: {
-            ...data.data,
-            cover: cover.data,
+            ...body,
+            cover: filePath,
             release_date: formatedData,
-            pages: Number(pages),
-            author_id: Number(author_id),
-            genre_id: Number(genre_id),
-            publish_company_id: Number(publish_company_id),
+            pages: +pages,
+            author_id: +author_id,
+            genre_id: +genre_id,
+            publish_company_id: +publish_company_id,
         },
     });
+    return "ok";
 };
 
 exports.bookBooks = async (id, data) => {

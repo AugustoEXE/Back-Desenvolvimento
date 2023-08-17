@@ -5,7 +5,7 @@ const userController = require("../controllers/userController.js");
 const route = express.Router();
 
 route.post("/create/user", async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, admin } = req.body;
 
     const hashedPass = await bcrypt.hash(password, 12);
     const cookiesOpts = {
@@ -13,10 +13,10 @@ route.post("/create/user", async (req, res) => {
         httpOnly: true,
     };
     const userAuth = await userController.create({
-        name: name,
-        email: email,
+        name,
+        email,
         password: hashedPass,
-        admin: false,
+        admin,
     });
     res.cookie(
         "userAuthentication",
@@ -30,8 +30,8 @@ route.post("/user/login", async (req, res) => {
     // console.log(email);
     try {
         const user = await userController.login({
-            email: email,
-            password: password,
+            email,
+            password,
         });
         const cookiesOpts = {
             maxAge: 24 * 60 * 60 * 1000,
