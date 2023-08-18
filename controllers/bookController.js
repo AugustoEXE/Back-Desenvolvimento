@@ -49,7 +49,7 @@ exports.create = async ({ body, files }) => {
     const filePath = process.env.UPLOAD_FILE + files.filename;
     const formatedData = !release_date ? undefined : new Date(release_date);
 
-    editedImage(filePath, 500, 330);
+    editedImage(filePath, 330, 500);
 
     await prisma.book.create({
         data: {
