@@ -40,7 +40,7 @@ exports.list = async (params) => {
 // exports.list = async () => {
 //     return await prisma.book.findMany();
 // };
-console.log("ta aqui");
+// console.log("ta aqui");
 
 exports.create = async ({ body, files }) => {
     const { release_date, pages, author_id, genre_id, publish_company_id } =
