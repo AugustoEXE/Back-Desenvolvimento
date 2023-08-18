@@ -43,12 +43,13 @@ exports.list = async (params) => {
 // console.log("ta aqui");
 
 exports.create = async ({ body, files }) => {
+    // console.log(files)
     const { release_date, pages, author_id, genre_id, publish_company_id } =
         body;
     const filePath = process.env.UPLOAD_FILE + files.filename;
     const formatedData = !release_date ? undefined : new Date(release_date);
 
-    editedImage(filePath, 330, 500);
+    editedImage(filePath, 500, 330);
 
     await prisma.book.create({
         data: {
@@ -73,7 +74,7 @@ exports.bookBooks = async (id, data) => {
 exports.delete = async (id) => {
     await prisma.book.delete({
         where: {
-            id: Number(id),
+            id: parseInt(id),
         },
     });
 };

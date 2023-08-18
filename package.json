@@ -28,6 +28,7 @@
         "jsonwebtoken": "^9.0.0",
         "multer": "^1.4.5-lts.1",
         "nodemon": "^3.0.1",
+        "sharp": "^0.32.5",
         "yarn": "^1.22.19"
     }
 }

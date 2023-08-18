@@ -9,7 +9,7 @@ exports.create = async (data) => await prisma.author.create({data});
 exports.update = async (id, name) => {
     await prisma.author.update({
         where: { id },
-        data: { name: data.name },
+        data: { name },
     });
 };
 

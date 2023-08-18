@@ -57,19 +57,18 @@ route.delete("/user/delete/:id", async (req, res) => {
 route.put("/user/update/:id", async (req, res) => {
     const { id } = req.params;
     const { name, email } = req.body;
-
-    await userController.alter({ id: id, data: { email: email, name: name } });
+    await userController.alter(req.body);
     res.send("Usuário alterado!");
 });
 
-route.get("user/take_one/:id", async (req, res) => {
+route.get("/user/take_one/:id", async (req, res) => {
     const { id } = req.params;
 
     const userFound = await userController(id);
     res.status(200).send("Usuário encontroado").json({ userFound });
 });
 
-route.get("user/get-all", async (req, res) => {
+route.get("/user/get-all", async (req, res) => {
     const users = await userController.list();
     res.json(users);
 })

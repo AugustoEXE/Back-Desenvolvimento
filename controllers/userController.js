@@ -25,7 +25,7 @@ exports.delete = async (id) => {
 };
 
 exports.alter = async (data) => {
-    await prisma.User.update({ where: { id: data.id }, data: data.value });
+    await prisma.User.update({ where: { id: parseInt(data.id) }, data });
 };
 
 exports.getOne = async (param) => {
@@ -36,6 +36,15 @@ exports.getOne = async (param) => {
         return e.message;
     }
 };
+
+exports.list = async () => {
+    try {
+        const list = await prisma.User.findMany() 
+        return list       
+    } catch (error) {
+        return error
+    }
+}
 
 exports.login = async (data) => {
     const { email } = data
