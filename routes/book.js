@@ -14,6 +14,7 @@ router.get("/books", async (req, res) => {
 });
 
 router.post("/book", upload.single("file"), (req, res) => {
+    console.log(req.body);
     const newBook = bookController.create({
         body: req.body,
         files: req.file,

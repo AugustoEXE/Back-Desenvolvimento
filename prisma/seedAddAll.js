@@ -60,7 +60,7 @@ async function createSeeder() {
         data: [
             {
                 name: "O colecionador de lágrimas",
-                cover: "nomedoarquivo",
+                cover: "uploads/1692241397747_968864.png",
                 pages: 323,
                 language: "português",
                 release_date: new Date("2023-07-28T15:20:45"),
@@ -69,7 +69,7 @@ async function createSeeder() {
                 publish_company_id: findPublishCompanies[2].id,
             },
             {
-                cover: "nomedoarquivo",
+                cover: "uploads/1692241397747_968864.png",
                 name: "Quincas Borba",
                 pages: 200,
                 language: "português",
@@ -78,7 +78,7 @@ async function createSeeder() {
                 publish_company_id: findPublishCompanies[0].id,
             },
             {
-                cover: "nomedoarquivo",
+                cover: "uploads/1692241397747_968864.png",
                 name: "A revolu;ão do bichos",
                 pages: 180,
                 language: "português",

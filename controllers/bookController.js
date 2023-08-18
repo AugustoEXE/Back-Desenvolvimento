@@ -1,7 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
-const path = require("path");
-const Jimp = require("jimp");
+const editedImage = require("../funcs/editImage");
 
 exports.list = async (params) => {
     const releaseDate = !params.release_date
@@ -44,29 +43,14 @@ exports.list = async (params) => {
 // console.log("ta aqui");
 
 exports.create = async ({ body, files }) => {
+    // console.log(files)
     const { release_date, pages, author_id, genre_id, publish_company_id } =
         body;
-
-    console.log(body);
-    const formatedData = !release_date ? undefined : new Date(release_date);
     const filePath = process.env.UPLOAD_FILE + files.filename;
-    // return
-    console.log(files);
-    //const blobImage = Buffer.from(cover, "utf8");
-    // console.clear();
-    // console.log(blobImage);
-    // return
-    // console.log({
-    //     data: {
-    //         ...data,
-    //         // cover: blobImage,
-    //         release_date: formatedData,
-    //         pages: +pages,
-    //         author_id: +author_id   ,
-    //         genre_id: +genre_id,
-    //         publish_company_id: +publish_company_id,
-    //     },
-    // })
+    const formatedData = !release_date ? undefined : new Date(release_date);
+
+    editedImage(filePath, 500, 330);
+
     await prisma.book.create({
         data: {
             ...body,
