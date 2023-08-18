@@ -25,7 +25,7 @@ exports.delete = async (id) => {
 };
 
 exports.alter = async (data) => {
-    await prisma.User.update({ where: { id: data.id }, data: data.value });
+    await prisma.User.update({ where: { id: parseInt(data.id) }, data });
 };
 
 exports.getOne = async (param) => {

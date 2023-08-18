@@ -57,8 +57,7 @@ route.delete("/user/delete/:id", async (req, res) => {
 route.put("/user/update/:id", async (req, res) => {
     const { id } = req.params;
     const { name, email } = req.body;
-
-    await userController.alter({ id: id, data: { email: email, name: name } });
+    await userController.alter(req.body);
     res.send("Usuário alterado!");
 });
 
