@@ -18,11 +18,12 @@ route.post("/create/user", async (req, res) => {
         password: hashedPass,
         admin,
     });
-    res.cookie(
+
+    return res.cookie(
         "userAuthentication",
         JSON.stringify(userAuth),
         cookiesOpts
-    ).send("Ok");
+    ).json({message: "Logado"});
 });
 
 route.post("/user/login", async (req, res) => {
@@ -33,11 +34,14 @@ route.post("/user/login", async (req, res) => {
             email,
             password,
         });
+
+        console.log(user);
         const cookiesOpts = {
             maxAge: 24 * 60 * 60 * 1000,
             httpOnly: true,
         };
-        res.cookie(
+        
+       return res.cookie(
             "userAuthentication",
             JSON.stringify(user),
             cookiesOpts

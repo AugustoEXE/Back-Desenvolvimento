@@ -2,6 +2,7 @@ const { PrismaClient } = require("@prisma/client");
 const { generateToken } = require("../funcs/token.js");
 const bcrypt = require("bcrypt");
 const { log } = require("console");
+const res = require("express/lib/response");
 
 const prisma = new PrismaClient();
 
@@ -47,18 +48,17 @@ exports.list = async () => {
 }
 
 exports.login = async (data) => {
-    const { email } = data
+    const { email,password } = data
     const userExists = await prisma.User.findUnique({
         where: { email },
     });
 
     if (userExists.email === data.email) {
-        const cookieValue = await generateToken(userExists);
-        const validate = bcrypt.compare(data.password, userExists.password);
-        if (validate) {
+        const validate = await bcrypt.compare(data.password, userExists.password);
+                        if (validate) {
             return cookieValue;
         } else {
-            throw new Error("Senha incorreta!");
+            res.js;
         }
     } else {
         throw new Error("Usuário não registrado!");
