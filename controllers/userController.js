@@ -48,19 +48,20 @@ exports.list = async () => {
 
 exports.login = async (data) => {
     const { email } = data;
-    const userExists = await prisma.User.findUnique({
+    console.log(email);
+    const userExists = await prisma.user.findUnique({
         where: { email },
     });
-
-    if (userExists.email === data.email) {
+    console.log(userExists.email, "sdlmfds;fkdo;");
+    if (userExists.email === email) {
         const cookieValue = await generateToken(userExists);
         const validate = bcrypt.compare(data.password, userExists.password);
         if (validate) {
             return cookieValue;
         } else {
-            throw new Error("wrongPass");
+            throw new Error("Senha incorreta!");
         }
     } else {
-        throw new Error("emailNotFound");
+        throw new Error("Usuário não registrado!");
     }
 };
