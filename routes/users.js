@@ -27,7 +27,7 @@ route.post("/create/user", async (req, res) => {
 
 route.post("/user/login", async (req, res) => {
     const { email, password } = req.body;
-    // console.log(email);
+    console.log(email);
     try {
         const user = await userController.login({
             email,
@@ -71,6 +71,6 @@ route.get("/user/take_one/:id", async (req, res) => {
 route.get("/user/get-all", async (req, res) => {
     const users = await userController.list();
     res.json(users);
-})
+});
 
 module.exports = route;

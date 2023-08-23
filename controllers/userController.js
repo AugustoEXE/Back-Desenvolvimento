@@ -39,15 +39,15 @@ exports.getOne = async (param) => {
 
 exports.list = async () => {
     try {
-        const list = await prisma.User.findMany() 
-        return list       
+        const list = await prisma.User.findMany();
+        return list;
     } catch (error) {
-        return error
+        return error;
     }
-}
+};
 
 exports.login = async (data) => {
-    const { email } = data
+    const { email } = data;
     const userExists = await prisma.User.findUnique({
         where: { email },
     });
@@ -58,9 +58,9 @@ exports.login = async (data) => {
         if (validate) {
             return cookieValue;
         } else {
-            throw new Error("Senha incorreta!");
+            throw new Error("wrongPass");
         }
     } else {
-        throw new Error("Usuário não registrado!");
+        throw new Error("emailNotFound");
     }
 };
