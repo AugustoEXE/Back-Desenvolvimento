@@ -1,6 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const userController = require("../controllers/userController.js");
+const { auth } = require("../middlewares/auth.js");
 
 const route = express.Router();
 
@@ -26,26 +27,26 @@ route.post("/create/user", async (req, res) => {
 
 route.post("/user/login", async (req, res) => {
     const { email, password } = req.body;
-    console.log(email);
+    // console.log(email);
     try {
         const user = await userController.login({
             email,
             password,
         });
 
-        console.log(user);
         const cookiesOpts = {
             maxAge: 24 * 60 * 60 * 1000,
             httpOnly: true,
         };
-
-        res.cookie(
-            "userAuthentication",
-            JSON.stringify(user),
-            cookiesOpts
-        ).json({ message: "Loagado!" });
+        if (user) {
+            res.cookie(
+                "userAuthentication",
+                JSON.stringify(user),
+                cookiesOpts
+            ).json({ message: "Loagado!" });
+        }
     } catch (e) {
-        res.json({ message: e.message });
+        res.status(400).send({ message: e.message });
     }
 });
 
@@ -63,11 +64,13 @@ route.put("/user/update/:id", async (req, res) => {
     res.send("Usuário alterado!");
 });
 
-route.get("/user/take_one/:id", async (req, res) => {
-    const { id } = req.params;
+route.get("/user/take_one", auth, async (req, res) => {
+    const { id } = req.payload;
+    console.log(id);
 
-    const userFound = await userController(id);
-    res.status(200).send("Usuário encontroado").json({ userFound });
+    const currentUser = await userController.getOne(id);
+    console.log(currentUser);
+    res.status(200).json(currentUser);
 });
 
 route.get("/user/get-all", async (req, res) => {

@@ -14,7 +14,6 @@ const path = require("path");
 
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 app.use(bodyParser.json({ limit: "50mb" }));
-app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use("/uploads", express.static(path.resolve(__dirname, "uploads")));
 app.use(

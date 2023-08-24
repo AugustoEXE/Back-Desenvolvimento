@@ -30,7 +30,10 @@ exports.alter = async (data) => {
 
 exports.getOne = async (param) => {
     try {
-        const resp = await prisma.User.findUnique({ where: { id: param } });
+        const resp = await prisma.User.findUnique({
+            where: { id: param },
+            select: { id: true, admin: true, name: true, email: true },
+        });
         return resp;
     } catch (e) {
         return e.message;
@@ -47,21 +50,22 @@ exports.list = async () => {
 };
 
 exports.login = async (data) => {
-    const { email } = data;
-    console.log(email);
+    const { email, password } = data;
     const userExists = await prisma.user.findUnique({
         where: { email },
     });
-    console.log(userExists.email, "sdlmfds;fkdo;");
-    if (userExists.email === email) {
+
+    // console.log(userExists);
+
+    if (userExists) {
         const cookieValue = await generateToken(userExists);
-        const validate = bcrypt.compare(data.password, userExists.password);
+        const validate = await bcrypt.compare(password, userExists.password);
         if (validate) {
             return cookieValue;
         } else {
-            throw new Error("Senha incorreta!");
+            throw new Error("wrongPass");
         }
     } else {
-        throw new Error("Usuário não registrado!");
+        throw new Error("emailNotFound");
     }
 };

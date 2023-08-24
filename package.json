@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "prisma": {
-        "seed": "node prisma/seedLEssBooks.js"
+        "seed": "node prisma/seedAddAll.js"
     },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",

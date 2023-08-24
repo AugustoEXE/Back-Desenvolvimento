@@ -42,7 +42,13 @@ exports.create = async (data) => {
 exports.bookedUserBooks = async (id) =>
     await prisma.bookedBooks.findMany({
         include: {
-            book: true,
+            book: {
+                include: {
+                    author: true,
+                    genre: true,
+                    publish_company: true,
+                },
+            },
         },
         where: {
             user_id: id,

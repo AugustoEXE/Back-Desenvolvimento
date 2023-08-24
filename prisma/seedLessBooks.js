@@ -1,25 +1,28 @@
 const { PrismaClient } = require("@prisma/client");
+const bcrypt = require("bcrypt");
 
 const prisma = new PrismaClient();
 async function createSeeder() {
+    const pass = await bcrypt.hash("senha123", 12);
+
     const user = await prisma.User.createMany({
         data: [
             {
                 name: "Gabriel",
                 email: "santini@gmail.com",
-                password: "senha123",
+                password: pass,
                 admin: true,
             },
             {
                 name: "Inácio",
                 email: "inacio@gmail.com",
-                password: "senha123",
+                password: pass,
                 admin: true,
             },
             {
                 name: "Augusto",
                 email: "augusto@gmail.com",
-                password: "senha123",
+                password: pass,
                 admin: true,
             },
         ],
