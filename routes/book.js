@@ -8,7 +8,7 @@ const upload = multer({ storage });
 
 router.get("/books", async (req, res) => {
     const data = req.query;
-    console.log(data.author);
+    // console.log(data.author);
     const books = await bookController.list(data);
     res.json(books);
 });
