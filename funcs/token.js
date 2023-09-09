@@ -8,7 +8,7 @@ module.exports = {
         };
 
         const generatedJwt = jwt.sign(payload, process.env.SECRET_KEY, {
-            expiresIn: "24h",
+            expiresIn: 60 * 10,
         });
 
         const cookieValues = {

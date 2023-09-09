@@ -6,7 +6,7 @@ const multer = require("multer");
 const storage = require("../funcs/multer.config.js");
 const upload = multer({ storage });
 
-router.get("/books", async (req, res) => {
+router.get("/books", auth, async (req, res) => {
     const data = req.query;
     // console.log(data.author);
     const books = await bookController.list(data);
@@ -21,6 +21,7 @@ router.post("/book", upload.single("file"), (req, res) => {
     });
     return res.json(newBook);
 });
+
 router.delete("/book/del/:id", async (req, res) => {
     const { id } = req.params;
     const deletedBook = await bookController.delete(parseInt(id));

@@ -43,11 +43,15 @@ route.post("/user/login", async (req, res) => {
                 "userAuthentication",
                 JSON.stringify(user),
                 cookiesOpts
-            ).json({ message: "Loagado!" });
+            ).json({ isAuth: true });
         }
     } catch (e) {
         res.status(400).send({ message: e.message });
     }
+});
+
+route.get("/user/clear/cookie", async (req, res) => {
+    res.clearCookie("userAuthentication").json({ messge: "Cookie Limpo!" });
 });
 
 route.delete("/user/delete/:id", async (req, res) => {

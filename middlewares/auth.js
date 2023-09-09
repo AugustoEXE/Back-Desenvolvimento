@@ -7,16 +7,18 @@ module.exports = {
                 req.cookies.userAuthentication
             ).value;
 
-            const verifyToken = jwt.verify(
-                cookieValues,
-                process.env.SECRET_KEY
-            );
-            // console.log("esse agui", cookieValues);
-            if (verifyToken) {
-                req.payload = verifyToken;
-                next();
-            } else {
-                res.status(403).json({ mess: "no permissions" });
+            try {
+                const verifyToken = jwt.verify(
+                    cookieValues,
+                    process.env.SECRET_KEY
+                );
+
+                if (verifyToken) {
+                    req.payload = verifyToken;
+                    next();
+                }
+            } catch (e) {
+                res.status(403).json({ message: "Token expired" });
             }
         } else {
             res.status(403).json({ mess: "cookies not available" });
